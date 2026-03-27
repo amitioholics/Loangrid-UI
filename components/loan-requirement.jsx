@@ -4,7 +4,7 @@ import React from 'react';
 import {
     Box,
     Typography,
-    Grid,
+    Grid2 as Grid,
     Button
 } from '@mui/material';
 import {
@@ -31,16 +31,17 @@ export function LoanRequirement({ selectedLoan, onLoanChange }) {
             <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Loan Requirement</Typography>
             <Grid container spacing={1.5}>
                 {loanTypes.map((type) => (
-                    <Grid size={{ xs: 4, sm: 4, md: 2 }} key={type.id}>
+                    <Grid size={{ xs: 6, sm: 6, md: 4 }} key={type.id}>
                         <Button
                             fullWidth
                             onClick={() => onLoanChange(type.id)}
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: 0.5,
-                                p: 1,
-                                borderRadius: 1.5,
+                                gap: { xs: 0.5, md: 1 },
+                                p: { xs: 1, md: 1.5 },
+                                minHeight: { xs: 85, md: 100 },
+                                borderRadius: 2,
                                 border: '1px solid',
                                 borderColor: selectedLoan === type.id ? 'primary.main' : 'rgba(0,0,0,0.05)',
                                 bgcolor: selectedLoan === type.id ? 'rgba(97, 199, 104, 0.08)' : 'rgba(0,0,0,0.02)',
@@ -57,9 +58,9 @@ export function LoanRequirement({ selectedLoan, onLoanChange }) {
                                 p: 0,
                                 display: 'flex'
                             }}>
-                                {React.cloneElement(type.icon, { size: 18 })}
+                                {React.cloneElement(type.icon, { size: 28 })}
                             </Box>
-                            <Typography variant="caption" sx={{ fontWeight: '600', textAlign: 'center', fontSize: '0.65rem' }}>
+                            <Typography variant="caption" sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: { xs: '0.7rem', md: '0.75rem' }, lineHeight: 1.2 }}>
                                 {type.name}
                             </Typography>
                         </Button>

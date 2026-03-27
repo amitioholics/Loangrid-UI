@@ -5,7 +5,7 @@ import {
     Container,
     Box,
     Typography,
-    Grid,
+    Grid2 as Grid,
     Card,
     CardContent,
     Slider,
@@ -44,7 +44,6 @@ import Link from 'next/link';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { LoanRequirement } from '@/components/loan-requirement';
-
 
 export default function EMICalculator() {
     const [selectedLoan, setSelectedLoan] = useState('personal');
@@ -127,7 +126,7 @@ export default function EMICalculator() {
         <Box sx={{ minHeight: '100vh', bgcolor: '#f8fafc' }}>
             <Header />
 
-            <Box sx={{ py: 6, bgcolor: 'primary.main', color: 'white' }}>
+            <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: 'primary.main', color: 'white' }}>
                 <Container maxWidth="lg">
                     <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
                         <Button
@@ -139,101 +138,101 @@ export default function EMICalculator() {
                             Back to Home
                         </Button>
                     </Stack>
-                    <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
+                    <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2, fontSize: { xs: '2rem', md: '3rem' } }}>
                         EMI Calculator
                     </Typography>
-                    <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600 }}>
+                    <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600, fontSize: { xs: '1rem', md: '1.25rem' } }}>
                         Calculate your EMI and plan your finances with our easy-to-use tool.
                     </Typography>
                 </Container>
             </Box>
 
             <Container maxWidth="lg" sx={{ mt: -4, mb: 4 }}>
-                <Grid container spacing={4} alignItems="flex-start">
+                <Grid container spacing={{ xs: 2, md: 4 }} alignItems="flex-start">
                     <Grid size={{ xs: 12, md: 7 }}>
                         <Stack spacing={3}>
-                            <Card sx={{ borderRadius: 4, p: 3, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                                <LoanRequirement selectedLoan={selectedLoan} onLoanChange={setSelectedLoan} />
-                            </Card>
-
-                            <Card sx={{ borderRadius: 4, p: 3, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                                <Stack spacing={2.5}>
-                                    <Box>
-                                        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                                            <Typography variant="body2" sx={{ fontWeight: '600', color: 'text.primary' }}>
-                                                Loan Amount
-                                            </Typography>
-                                            <TextField
-                                                size="small"
+                            <Card sx={{ borderRadius: 4, p: { xs: 2, md: 3 }, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                                <Stack spacing={{ xs: 3, md: 4 }}>
+                                    <Stack spacing={{ xs: 2, md: 2.5 }}>
+                                        <Box>
+                                            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: '600', color: 'text.primary' }}>
+                                                    Loan Amount
+                                                </Typography>
+                                                <TextField
+                                                    size="small"
+                                                    value={amount}
+                                                    onChange={(e) => setAmount(Number(e.target.value.replace(/[^0-9]/g, '')))}
+                                                    sx={{ width: 150 }}
+                                                />
+                                            </Stack>
+                                            <Slider
                                                 value={amount}
-                                                onChange={(e) => setAmount(Number(e.target.value.replace(/[^0-9]/g, '')))}
-                                                sx={{ width: 150 }}
+                                                min={10000}
+                                                max={10000000}
+                                                step={10000}
+                                                onChange={(e, val) => setAmount(val)}
+                                                sx={{ height: 6 }}
                                             />
-                                        </Stack>
-                                        <Slider
-                                            value={amount}
-                                            min={10000}
-                                            max={10000000}
-                                            step={10000}
-                                            onChange={(e, val) => setAmount(val)}
-                                            sx={{ height: 6 }}
-                                        />
-                                        <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
-                                            <Typography variant="caption" color="text.secondary">₹10K</Typography>
-                                            <Typography variant="caption" color="text.secondary">₹1Cr</Typography>
-                                        </Stack>
-                                    </Box>
+                                            <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
+                                                <Typography variant="caption" color="text.secondary">₹10K</Typography>
+                                                <Typography variant="caption" color="text.secondary">₹1Cr</Typography>
+                                            </Stack>
+                                        </Box>
 
-                                    <Box>
-                                        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                                            <Typography variant="body2" sx={{ fontWeight: '600', color: 'text.primary' }}>
-                                                Rate of Interest (%)
-                                            </Typography>
-                                            <TextField
-                                                size="small"
+                                        <Box>
+                                            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: '600', color: 'text.primary' }}>
+                                                    Rate of Interest (%)
+                                                </Typography>
+                                                <TextField
+                                                    size="small"
+                                                    value={rate}
+                                                    onChange={(e) => setRate(Number(e.target.value))}
+                                                    sx={{ width: 100 }}
+                                                />
+                                            </Stack>
+                                            <Slider
                                                 value={rate}
-                                                onChange={(e) => setRate(Number(e.target.value))}
-                                                sx={{ width: 100 }}
+                                                min={5}
+                                                max={25}
+                                                step={0.1}
+                                                onChange={(e, val) => setRate(val)}
+                                                sx={{ height: 6, color: '#448AFF' }}
                                             />
-                                        </Stack>
-                                        <Slider
-                                            value={rate}
-                                            min={5}
-                                            max={25}
-                                            step={0.1}
-                                            onChange={(e, val) => setRate(val)}
-                                            sx={{ height: 6, color: '#448AFF' }}
-                                        />
-                                        <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
-                                            <Typography variant="caption" color="text.secondary">5%</Typography>
-                                            <Typography variant="caption" color="text.secondary">25%</Typography>
-                                        </Stack>
-                                    </Box>
+                                            <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
+                                                <Typography variant="caption" color="text.secondary">5%</Typography>
+                                                <Typography variant="caption" color="text.secondary">25%</Typography>
+                                            </Stack>
+                                        </Box>
 
-                                    <Box>
-                                        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                                            <Typography variant="subtitle1" sx={{ fontWeight: '600', color: 'text.primary' }}>
-                                                Loan Tenure (Months)
-                                            </Typography>
-                                            <TextField
-                                                size="small"
+                                        <Box>
+                                            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                                                <Typography variant="subtitle1" sx={{ fontWeight: '600', color: 'text.primary' }}>
+                                                    Loan Tenure (Months)
+                                                </Typography>
+                                                <TextField
+                                                    size="small"
+                                                    value={tenure}
+                                                    onChange={(e) => setTenure(Number(e.target.value))}
+                                                    sx={{ width: 100 }}
+                                                />
+                                            </Stack>
+                                            <Slider
                                                 value={tenure}
-                                                onChange={(e) => setTenure(Number(e.target.value))}
-                                                sx={{ width: 100 }}
+                                                min={6}
+                                                max={120}
+                                                onChange={(e, val) => setTenure(val)}
+                                                sx={{ height: 6, color: '#FF7043' }}
                                             />
-                                        </Stack>
-                                        <Slider
-                                            value={tenure}
-                                            min={6}
-                                            max={120}
-                                            onChange={(e, val) => setTenure(val)}
-                                            sx={{ height: 6, color: '#FF7043' }}
-                                        />
-                                        <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
-                                            <Typography variant="caption" color="text.secondary">6 months</Typography>
-                                            <Typography variant="caption" color="text.secondary">10 years</Typography>
-                                        </Stack>
-                                    </Box>
+                                            <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
+                                                <Typography variant="caption" color="text.secondary">6 months</Typography>
+                                                <Typography variant="caption" color="text.secondary">10 years</Typography>
+                                            </Stack>
+                                        </Box>
+                                    </Stack>
+                                    <Divider />
+                                    <LoanRequirement selectedLoan={selectedLoan} onLoanChange={setSelectedLoan} />
                                 </Stack>
                             </Card>
                         </Stack>
@@ -245,38 +244,39 @@ export default function EMICalculator() {
                                 borderRadius: 4,
                                 background: 'linear-gradient(135deg, #1A73E8 0%, #00C853 100%)',
                                 color: 'white',
-                                p: 3,
+                                p: { xs: 2.5, md: 3 },
                                 position: 'relative',
                                 overflow: 'hidden',
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
                             }}>
-                                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2, opacity: 0.9 }}>
-                                    <TrendingUp size={20} />
-                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 1 }}>
+                                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5, opacity: 0.9 }}>
+                                    <TrendingUp size={18} />
+                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 1, fontSize: '0.75rem' }}>
                                         Your EMI Breakdown
                                     </Typography>
                                 </Stack>
 
                                 <Box sx={{
                                     textAlign: 'center',
-                                    py: 4,
+                                    py: 2.5,
                                     bgcolor: 'rgba(255,255,255,0.1)',
                                     borderRadius: 3,
                                     border: '1px solid rgba(255,255,255,0.2)',
-                                    mb: 4
+                                    mb: 2.5
                                 }}>
-                                    <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>Monthly EMI</Typography>
-                                    <Typography variant="h2" sx={{ fontWeight: 'bold', mb: 3 }}>{formatCurrency(emi)}</Typography>
+                                    <Typography variant="caption" sx={{ opacity: 0.8, mb: 0.5, display: 'block' }}>Monthly EMI</Typography>
+                                    <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>{formatCurrency(emi)}</Typography>
                                     <Button
                                         variant="contained"
                                         sx={{
                                             bgcolor: 'white',
                                             color: '#1A73E8',
-                                            px: 4,
-                                            py: 1.5,
+                                            px: 3,
+                                            py: 0.8,
                                             borderRadius: 2,
                                             fontWeight: 'bold',
                                             textTransform: 'none',
+                                            fontSize: '0.875rem',
                                             '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' }
                                         }}
                                     >
@@ -284,33 +284,33 @@ export default function EMICalculator() {
                                     </Button>
                                 </Box>
 
-                                <Stack spacing={3}>
+                                <Stack spacing={2}>
                                     <Stack direction="row" spacing={2} alignItems="center">
-                                        <Box sx={{ p: 1, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 1.5 }}>
-                                            <IndianRupee size={20} />
+                                        <Box sx={{ p: 0.8, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 1.5, display: 'flex' }}>
+                                            <IndianRupee size={18} />
                                         </Box>
                                         <Box>
-                                            <Typography variant="caption" sx={{ opacity: 0.8, display: 'block' }}>Total Interest Payable</Typography>
-                                            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{formatCurrency(totalInterest)}</Typography>
+                                            <Typography variant="caption" sx={{ opacity: 0.8, display: 'block', fontSize: '0.7rem' }}>Total Interest Payable</Typography>
+                                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>{formatCurrency(totalInterest)}</Typography>
                                         </Box>
                                     </Stack>
                                     <Stack direction="row" spacing={2} alignItems="center">
-                                        <Box sx={{ p: 1, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 1.5 }}>
-                                            <Calculator size={20} />
+                                        <Box sx={{ p: 0.8, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 1.5, display: 'flex' }}>
+                                            <Calculator size={18} />
                                         </Box>
                                         <Box>
-                                            <Typography variant="caption" sx={{ opacity: 0.8, display: 'block' }}>Total Amount Payable</Typography>
-                                            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{formatCurrency(totalAmount)}</Typography>
+                                            <Typography variant="caption" sx={{ opacity: 0.8, display: 'block', fontSize: '0.7rem' }}>Total Amount Payable</Typography>
+                                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>{formatCurrency(totalAmount)}</Typography>
                                         </Box>
                                     </Stack>
                                 </Stack>
                             </Card>
 
-                            <Card sx={{ borderRadius: 4, p: 3, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                                <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Payment Breakdown</Typography>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                                    <Box sx={{ position: 'relative', width: 220, height: 220 }}>
-                                        <svg width="220" height="220" viewBox="0 0 120 120">
+                            <Card sx={{ borderRadius: 4, p: 2.5, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1.5, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: 1, color: 'text.secondary' }}>Payment Breakdown</Typography>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2.5 }}>
+                                    <Box sx={{ position: 'relative', width: 170, height: 170 }}>
+                                        <svg width="170" height="170" viewBox="0 0 120 120">
                                             <circle cx="60" cy="60" r="50" fill="none" stroke="#00C853" strokeWidth="12" />
                                             <circle
                                                 cx="60" cy="60" r="50" fill="none" stroke="#1A73E8" strokeWidth="12"
@@ -319,43 +319,43 @@ export default function EMICalculator() {
                                             />
                                         </svg>
                                         <Box sx={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                                            <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
                                                 {principalPercent.toFixed(1)}%
                                             </Typography>
-                                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: '600' }}>
+                                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', fontSize: '0.7rem' }}>
                                                 Principal
                                             </Typography>
                                         </Box>
                                     </Box>
 
-                                    <Stack spacing={2} sx={{ width: '100%' }}>
+                                    <Stack spacing={1.2} sx={{ width: '100%' }}>
                                         <Box sx={{
                                             display: 'flex',
                                             justifyContent: 'space-between',
-                                            p: 2,
+                                            p: 1.2,
                                             bgcolor: 'rgba(26, 115, 232, 0.04)',
-                                            borderRadius: 3,
+                                            borderRadius: 2,
                                             border: '1px solid rgba(26, 115, 232, 0.08)'
                                         }}>
-                                            <Stack direction="row" spacing={2} alignItems="center">
-                                                <Box sx={{ width: 12, height: 12, bgcolor: '#1A73E8', borderRadius: '50%' }} />
-                                                <Typography variant="body2" sx={{ fontWeight: '600' }}>Principal Amount</Typography>
+                                            <Stack direction="row" spacing={1.5} alignItems="center">
+                                                <Box sx={{ width: 10, height: 10, bgcolor: '#1A73E8', borderRadius: '50%' }} />
+                                                <Typography variant="caption" sx={{ fontWeight: '600' }}>Principal Amount</Typography>
                                             </Stack>
-                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{formatCurrency(amount)}</Typography>
+                                            <Typography variant="caption" sx={{ fontWeight: 'bold' }}>{formatCurrency(amount)}</Typography>
                                         </Box>
                                         <Box sx={{
                                             display: 'flex',
                                             justifyContent: 'space-between',
-                                            p: 2,
+                                            p: 1.2,
                                             bgcolor: 'rgba(0, 200, 83, 0.04)',
-                                            borderRadius: 3,
+                                            borderRadius: 2,
                                             border: '1px solid rgba(0, 200, 83, 0.08)'
                                         }}>
-                                            <Stack direction="row" spacing={2} alignItems="center">
-                                                <Box sx={{ width: 12, height: 12, bgcolor: '#00C853', borderRadius: '50%' }} />
-                                                <Typography variant="body2" sx={{ fontWeight: '600' }}>Total Interest</Typography>
+                                            <Stack direction="row" spacing={1.5} alignItems="center">
+                                                <Box sx={{ width: 10, height: 10, bgcolor: '#00C853', borderRadius: '50%' }} />
+                                                <Typography variant="caption" sx={{ fontWeight: '600' }}>Total Interest</Typography>
                                             </Stack>
-                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{formatCurrency(totalInterest)}</Typography>
+                                            <Typography variant="caption" sx={{ fontWeight: 'bold' }}>{formatCurrency(totalInterest)}</Typography>
                                         </Box>
                                     </Stack>
                                 </Box>
