@@ -4,7 +4,7 @@ import React from 'react';
 import {
     Box,
     Typography,
-    Grid2 as Grid,
+    Grid,
     Button
 } from '@mui/material';
 import {
